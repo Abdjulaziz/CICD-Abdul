@@ -1,0 +1,18 @@
+{
+  "Name": "Airport",
+  "Alias": "airport",
+  "AllowedTemplates": [],
+  "HistoryCleanup": {},
+  "Icon": "icon-plane color-red",
+  "Thumbnail": "folder.png",
+  "Permissions": {
+    "AllowedChildContentTypes": []
+  },
+  "CompositionContentTypes": [],
+  "PropertyGroups": [],
+  "PropertyTypes": [],
+  "Udi": "umb://document-type/16f00c0cd1204bb7893d17dd06b7bf41",
+  "Dependencies": [],
+  "__type": "Umbraco.Deploy.Infrastructure,Umbraco.Deploy.Infrastructure.Artifacts.ContentType.DocumentTypeArtifact",
+  "__version": "14.0.1"
+}
