@@ -6,6 +6,12 @@
       "Id": "8aea9c3b-1ba9-42fa-aebf-8125a30f761b",
       "Workspaces": [
         {
+          "Id": "0e503064-b31b-4bf8-b0e2-9fff1d297607",
+          "Name": "Development",
+          "Type": "development",
+          "Url": "https://dev-cicd-abdul.euwest01.umbraco.io"
+        },
+        {
           "Id": "9076178a-5dfe-49c3-b691-d106e7f0edfb",
           "Name": "Live",
           "Type": "live",
