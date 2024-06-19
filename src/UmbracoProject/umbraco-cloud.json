@@ -1,7 +1,17 @@
 {
   "Deploy": {
     "Project": {
-      "Workspaces": []
+      "Name": "cicd abdul",
+      "Alias": "cicd-abdul",
+      "Id": "8aea9c3b-1ba9-42fa-aebf-8125a30f761b",
+      "Workspaces": [
+        {
+          "Id": "9076178a-5dfe-49c3-b691-d106e7f0edfb",
+          "Name": "Live",
+          "Type": "live",
+          "Url": "https://cicd-abdul.euwest01.umbraco.io"
+        }
+      ]
     },
     "Settings": {}
   },
