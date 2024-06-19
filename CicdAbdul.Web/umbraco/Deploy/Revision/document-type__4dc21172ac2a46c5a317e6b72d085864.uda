@@ -1,7 +1,10 @@
 {
   "Name": "Country",
   "Alias": "country",
-  "AllowedTemplates": [],
+  "DefaultTemplate": "umb://template/e98be5e0048e4fae9f14925667268fac",
+  "AllowedTemplates": [
+    "umb://template/e98be5e0048e4fae9f14925667268fac"
+  ],
   "HistoryCleanup": {},
   "Icon": "icon-globe color-green",
   "Thumbnail": "folder.png",
@@ -18,6 +21,10 @@
   "Dependencies": [
     {
       "Udi": "umb://document-type/16f00c0cd1204bb7893d17dd06b7bf41"
+    },
+    {
+      "Udi": "umb://template/e98be5e0048e4fae9f14925667268fac",
+      "Ordering": true
     }
   ],
   "__type": "Umbraco.Deploy.Infrastructure,Umbraco.Deploy.Infrastructure.Artifacts.ContentType.DocumentTypeArtifact",

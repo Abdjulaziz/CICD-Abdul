@@ -1,0 +1,14 @@
+{
+  "Name": "Airport",
+  "Alias": "airport",
+  "File": "umb://template-file/airport.cshtml",
+  "Udi": "umb://template/2bf0d7143a4b42258c67011210703ce5",
+  "Dependencies": [
+    {
+      "Udi": "umb://template-file/airport.cshtml",
+      "Ordering": true
+    }
+  ],
+  "__type": "Umbraco.Deploy.Infrastructure,Umbraco.Deploy.Infrastructure.Artifacts.TemplateArtifact",
+  "__version": "14.0.1"
+}

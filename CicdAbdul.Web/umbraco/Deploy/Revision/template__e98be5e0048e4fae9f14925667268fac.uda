@@ -1,0 +1,14 @@
+{
+  "Name": "Country",
+  "Alias": "country",
+  "File": "umb://template-file/country.cshtml",
+  "Udi": "umb://template/e98be5e0048e4fae9f14925667268fac",
+  "Dependencies": [
+    {
+      "Udi": "umb://template-file/country.cshtml",
+      "Ordering": true
+    }
+  ],
+  "__type": "Umbraco.Deploy.Infrastructure,Umbraco.Deploy.Infrastructure.Artifacts.TemplateArtifact",
+  "__version": "14.0.1"
+}
