@@ -92,6 +92,12 @@ jobs:
           name: git-patch
           path: ${{GITHUB.WORKSPACE}}/patch
 
+      - name: Backup existing .uda files
+        if: ${{ needs.checkForChanges.outputs.remoteChanges == 'yes' }}
+        run: |
+          mkdir -p backup_uda_files
+          mv CicdAbdul.Web/umbraco/Deploy/Revision/*.uda backup_uda_files/ || true
+
       - name: Applying git patch to branch
         if: ${{ needs.checkForChanges.outputs.remoteChanges == 'yes' }}
         run: |
@@ -101,3 +107,7 @@ jobs:
           git add *
           git commit -m "Adding cloud changes since deployment ${{ needs.preflight.outputs.latestDeploymentId }} [skip ci]"
           git push
+
+      - name: Restore backed up .uda files
+        if: ${{ needs.checkForChanges.outputs.remoteChanges == 'yes' }}
+        run: mv backup_uda_files/* CicdAbdul.Web/umbraco/Deploy/Revision/ || true
