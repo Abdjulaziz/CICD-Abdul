@@ -21,19 +21,14 @@ jobs:
       - name: Get Latest Deployment
         id: latest-deployment
         run: |
-          bash ${{GITHUB.WORKSPACE}}/.github/scripts/get_latest_deployment.sh \
-          ${{ env.projectId }} \
-          ${{ env.umbracoCloudApiKey }} \
-          GITHUB
+          latestDeploymentId=$(bash ${{GITHUB.WORKSPACE}}/.github/scripts/get_latest_deployment.sh \
+            ${{ env.projectId }} \
+            ${{ env.umbracoCloudApiKey }} \
+            GITHUB)
+          echo "Latest Deployment ID: $latestDeploymentId"
+          echo "::set-output name=latestDeploymentId::$latestDeploymentId"
         shell: bash
-        env:
-          projectId: ${{ secrets.projectId }}
-          umbracoCloudApiKey: ${{ secrets.umbracoCloudApiKey }}
-        # Debugging output
-        continue-on-error: true
-        if: always() # Ensure this step always runs so we can see outputs
-        run: echo "Latest Deployment ID: ${{ steps.latest-deployment.outputs.latestDeploymentId }}"
-
+         
     outputs: 
       latestDeploymentId: ${{ steps.latest-deployment.outputs.latestDeploymentId }}
 
@@ -49,17 +44,15 @@ jobs:
           latestDeploymentId: ${{ needs.preflight.outputs.latestDeploymentId }}
         if: ${{ needs.preflight.outputs.latestDeploymentId != '' }}
         run: |
-          bash ${{GITHUB.WORKSPACE}}/.github/scripts/get_changes_by_id.sh \
-          ${{ env.projectId }} \
-          ${{ env.umbracoCloudApiKey }} \
-          ${{ env.latestDeploymentId }} \
-          ${{GITHUB.WORKSPACE}}/patch \
-          GITHUB
+          remoteChanges=$(bash ${{GITHUB.WORKSPACE}}/.github/scripts/get_changes_by_id.sh \
+            ${{ env.projectId }} \
+            ${{ env.umbracoCloudApiKey }} \
+            ${{ env.latestDeploymentId }} \
+            ${{GITHUB.WORKSPACE}}/patch \
+            GITHUB)
+          echo "Remote Changes: $remoteChanges"
+          echo "::set-output name=remoteChanges::$remoteChanges"
         shell: bash
-        # Debugging output
-        continue-on-error: true
-        if: always() # Ensure this step always runs so we can see outputs
-        run: echo "Remote Changes: ${{ steps.latest-changes.outputs.remoteChanges }}"
 
       - name: See diff content if any
         if: ${{ steps.latest-changes.outputs.remoteChanges == 'yes' }}
