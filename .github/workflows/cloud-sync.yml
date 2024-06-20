@@ -21,12 +21,19 @@ jobs:
       - name: Get Latest Deployment
         id: latest-deployment
         run: |
-          bash ${{GITHUB_WORKSPACE}}/.github/scripts/get_latest_deployment.sh \
+          bash ${{GITHUB.WORKSPACE}}/.github/scripts/get_latest_deployment.sh \
           ${{ env.projectId }} \
           ${{ env.umbracoCloudApiKey }} \
           GITHUB
         shell: bash
-         
+        env:
+          projectId: ${{ secrets.projectId }}
+          umbracoCloudApiKey: ${{ secrets.umbracoCloudApiKey }}
+        # Debugging output
+        continue-on-error: true
+        if: always() # Ensure this step always runs so we can see outputs
+        run: echo "Latest Deployment ID: ${{ steps.latest-deployment.outputs.latestDeploymentId }}"
+
     outputs: 
       latestDeploymentId: ${{ steps.latest-deployment.outputs.latestDeploymentId }}
 
@@ -40,7 +47,7 @@ jobs:
         id: latest-changes
         env:
           latestDeploymentId: ${{ needs.preflight.outputs.latestDeploymentId }}
-        if: ${{ env.latestDeploymentId != '' }}
+        if: ${{ needs.preflight.outputs.latestDeploymentId != '' }}
         run: |
           bash ${{GITHUB.WORKSPACE}}/.github/scripts/get_changes_by_id.sh \
           ${{ env.projectId }} \
@@ -49,11 +56,15 @@ jobs:
           ${{GITHUB.WORKSPACE}}/patch \
           GITHUB
         shell: bash
+        # Debugging output
+        continue-on-error: true
+        if: always() # Ensure this step always runs so we can see outputs
+        run: echo "Remote Changes: ${{ steps.latest-changes.outputs.remoteChanges }}"
 
       - name: See diff content if any
         if: ${{ steps.latest-changes.outputs.remoteChanges == 'yes' }}
-        run: get-content ${{GITHUB.WORKSPACE}}/patch/git-patch.diff
         shell: pwsh
+        run: get-content ${{GITHUB.WORKSPACE}}/patch/git-patch.diff
 
       - name: Store diff before applying
         if: ${{ steps.latest-changes.outputs.remoteChanges == 'yes' }}
@@ -76,6 +87,10 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Ensure patch directory is clean
+        if: ${{ needs.checkForChanges.outputs.remoteChanges == 'yes' }}
+        run: rm -rf ${{GITHUB.WORKSPACE}}/patch
 
       - name: Get stored diff
         if: ${{ needs.checkForChanges.outputs.remoteChanges == 'yes' }}
